@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate - AI Therapist</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <!-- <link rel="icon" type="image/png" href="/static/images/logo.png"> -->
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="brain-icon">🧠</div>
+                    <span>MindMate</span>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <!-- Status bar -->
+        <div class="status-bar">
+            <div class="status-dot"></div>
+            <span>AI Therapist is online and ready to help</span>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="quick-actions">
+            <div class="quick-action" data-message="I'm feeling anxious">😰 I'm anxious</div>
+            <div class="quick-action" data-message="I'm feeling overwhelmed">😵 Overwhelmed</div>
+            <div class="quick-action" data-message="I need motivation">💪 Need motivation</div>
+            <div class="quick-action" data-message="I'm feeling sad">😢 Feeling sad</div>
+            <div class="quick-action" data-message="Help me relax">🧘 Help me relax</div>
+        </div>
+
+        <!-- Chat area -->
+        <div class="chat-box" id="chat-box">
+            {% if sessions %}
+                {% set last_date = None %}
+                {% for s in sessions %}
+                    {% set current_date = s.timestamp.strftime('%b %d, %Y') %}
+                    {% if current_date != last_date %}
+                        <div class="date-divider">{{ current_date }}</div>
+                        {% set last_date = current_date %}
+                    {% endif %}
+                    
+                    <div class="message user-message">
+                        <div class="message-header">
+                            <div class="avatar user-avatar">👤</div>
+                            <span>You</span>
+                            <span>•</span>
+                            <span>{{ s.timestamp.strftime('%H:%M') }}</span>
+                        </div>
+                        <div class="bubble">{{ s.input }}</div>
+                    </div>
+                    
+                    <div class="message bot-message">
+                        <div class="message-header">
+                            <div class="avatar bot-avatar">🤖</div>
+                            <span>MindMate</span>
+                            <span>•</span>
+                            <span>{{ s.timestamp.strftime('%H:%M') }}</span>
+                        </div>
+                        <div class="bubble">{{ s.response|safe }}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="welcome-message">
+                    <h3>Welcome to MindMate! 🌟</h3>
+                    <p>I'm here to listen and support you. Share what's on your mind, and let's work through it together.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Input area -->
+        <form id="chat-form" class="chat-input" autocomplete="off">
+            <div class="input-wrapper">
+                <textarea 
+                    id="message" 
+                    name="message" 
+                    placeholder="Share what's on your mind..." 
+                    rows="1"
+                    aria-label="Type your message"
+                    required
+                ></textarea>
+                <button class="emoji-btn" type="button" aria-label="Add emoji">😊</button>
+            </div>
+            <button class="send-btn" id="send-btn" type="submit" aria-label="Send message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

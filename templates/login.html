@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMate - Your AI Mental Health Companion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- <link rel="icon" type="image/png" href="/static/images/logo.png"> -->
+</head>
+<body>
+    <div class="container">
+        <!-- Background Animation -->
+        <div class="bg-animation">
+            <div class="floating-circle circle-1"></div>
+            <div class="floating-circle circle-2"></div>
+            <div class="floating-circle circle-3"></div>
+            <div class="floating-circle circle-4"></div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Side - Hero Section -->
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="logo-section">
+                        <div class="logo">
+                            <span class="logo-icon">🧠</span>
+                            <span class="logo-text">MindMate</span>
+                        </div>
+                        <div class="status-indicator">
+                            <span class="status-dot"></span>
+                            AI Therapist is online and ready to help
+                        </div>
+                    </div>
+                    
+                    <div class="hero-text">
+                        <h1>Your Personal AI Mental Health Companion</h1>
+                        <p>Get instant emotional support, coping strategies, and motivation whenever you need it. Our AI therapist is here to listen, understand, and guide you through life's challenges.</p>
+                        
+                        <div class="feature-highlights">
+                            <div class="feature">
+                                <span class="feature-icon">💬</span>
+                                <span>24/7 Emotional Support</span>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-icon">🛠️</span>
+                                <span>Personalized Coping Strategies</span>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-icon">🌟</span>
+                                <span>Daily Motivation & Guidance</span>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-icon">🔒</span>
+                                <span>Private & Secure</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Login/Register Form -->
+            <div class="login-section">
+                <div class="login-container">
+                    <div class="login-header">
+                        <h2 id="formTitle">Welcome to MindMate</h2>
+                        <p id="formSubtitle">Sign in or create an account to start your mental wellness journey</p>
+                    </div>
+
+                    {% if error %}
+                        <div class="error-banner">
+                            <span class="error-icon">⚠️</span>
+                            <span>{{ error }}</span>
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" action="{{ url_for('login') }}" class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                            <span class="error-message" id="nameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="password-input">
+                                <input type="password" id="password" name="password" required placeholder="Create a secure password">
+                                <button type="button" class="password-toggle" id="passwordToggle">
+                                   
+                                </button>
+                            </div>
+                            <span class="error-message" id="passwordError"></span>
+                            <div class="password-strength" id="passwordStrength"></div>
+                        </div>
+
+                        
+
+                        <button type="submit" class="login-btn" id="loginBtn">
+                            <span class="btn-text">Continue to MindMate</span>
+                            <span class="btn-loader" id="btnLoader"></span>
+                        </button>
+                    </form>
+
+                    
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+
+    
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>
